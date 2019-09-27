@@ -18,9 +18,12 @@ public class SPTinderViewCell: UIView, UIGestureRecognizerDelegate {
             self.layer.cornerRadius = cornerRadius
         }
     }
-    
+ 
+    var done = false
     var cellMovement: SPTinderViewCellMovement = .none
     
+    public var disableMovement = false
+ 
     typealias cellMovementChange = (SPTinderViewCellMovement) -> ()
     var onCellDidMove: cellMovementChange?
     
@@ -32,16 +35,19 @@ public class SPTinderViewCell: UIView, UIGestureRecognizerDelegate {
     }
     
     public required init(reuseIdentifier: String) {
+        print ("identifier")
         self.init()
         self.reuseIdentifier = reuseIdentifier
     }
     
     public override init(frame: CGRect) {
+        print ("frame")
         super.init(frame: frame)
         setupLayerAttributes()
     }
     
     public required init?(coder aDecoder: NSCoder) {
+        print ("coder")
         super.init(coder: aDecoder)
         setupLayerAttributes()
     }
@@ -54,11 +60,24 @@ public class SPTinderViewCell: UIView, UIGestureRecognizerDelegate {
         self.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         self.layer.shadowOpacity = 0.5
         self.layer.masksToBounds = false
+     
+        //self.createView()
+        
+    }
+ 
+    func createView()
+    {
+        //var x = (self.superview)
+        var v = UIView(frame: CGRect(x: self.superview!.layer.position.x, y: self.superview!.layer.position.y, width: 100, height: 100))
+        v.backgroundColor = UIColor.red
+        self.superview!.addSubview(v)
     }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let _ = touches.first else { return }
         originalCenter = self.center
+        
+//        print ("Original Center: \(originalCenter)")
     }
     
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -77,13 +96,202 @@ public class SPTinderViewCell: UIView, UIGestureRecognizerDelegate {
                 self.transform = rotatedTransfer
                 self.center.x += deltaX
                 self.center.y += deltaY
+             
+                if (self.center.x > (self.originalCenter.x*1.5))
+                {
+                    self.salamHalf()
+                }
+                
+                if (self.center.x < (self.originalCenter.x*0.5))
+                {
+                    self.nopeHalf()
+                }
+                
+                if ((self.center.y/self.originalCenter.y) > 0.7)
+                {
+                    
+                    self.fadeInView(val: (self.center.x/self.originalCenter.x) )
+                }
+                else
+                {
+                    self.fadeInView(vert: (self.center.y/self.originalCenter.y) )
+                }
+             
+             
                 }, completion: { finished in
                     
             })
         }
     }
+ 
+     
+    func fadeInView(vert: CGFloat)
+    {
+        if let view = getViewWithId(id: 1010)
+        {
+            view.backgroundColor = UIColor.clear
+            
+            if let img = view.subviews[0] as? UIImageView
+            {
+                img.image = UIImage(named: "btn-supersalam")
+            }
+            
+            view.alpha = 1-vert
+            
+            
+        }
+    }
+    
+    func fadeInView(val: CGFloat)
+    {
+        if let view = getViewWithId(id: 1010)
+        {
+ 
+            
+            if (val > 1.2)
+            {
+                var val = (val-1)/1.5*0.9
+                //print ("+\((val-1)/1.5*0.9)")
+                
+                view.backgroundColor = UIColor.clear
+                
+                if let img = view.subviews[0] as? UIImageView
+                {
+                    img.image = UIImage(named: "btn-salam")
+                }
+                
+                
+                if (val < 1.0)
+                {
+                    view.alpha = val
+                }
+            }
+            else if (val < 0.8)
+            {
+                var val = ((1.5-(val+1)/1.5)*0.9)
+                //print ("-\((1.5-(val+1)/1.5)*0.9)")
+                
+                view.backgroundColor = UIColor.clear
+                
+                if let img = view.subviews[0] as? UIImageView
+                {
+                    img.image = UIImage(named: "btn-nope")
+                }
+                
+                
+                if (val < 1.0)
+                {
+                    view.alpha = val
+                }
+            } else {
+                view.backgroundColor = UIColor.clear
+                 view.alpha = 0.0
+                
+//                for x in view.subviews
+//                {
+//                       x.removeFromSuperview()
+//                }
+            }
+        }
+        else
+        {
+            
+        }
+    }
+    
+    func getViewWithId(id: Int) -> UIView?
+    {
+        
+        if let s = self.superview as? UIView
+        {
+            
+            
+            
+            for x in s.subviews
+            {
+                if (x.tag == id)
+                {
+                    return x
+                }
+            }
+            
+            return nil
+
+        }
+        else
+        {
+            print ("3NIL")
+            return nil
+        }
+//        for x in self.superview!.superview!.subviews
+//        {
+//            print ("*")
+//            if (x.tag == 1010)
+//            {
+//                print ("*****FOUND")
+//            }
+//        }
+    }
+    
+    func showView()
+    {
+        
+    }
+    
+    
+    
+    func inRangeof(i: Int, curr: CGPoint) -> Bool
+    {
+        
+        var startX = self.originalCenter.x + CGFloat(i)
+        var endX = self.originalCenter.x - CGFloat(i)
+        
+        if (curr.x < startX && curr.x > endX)
+        {
+            return true
+        }
+        
+        return false
+    }
+    func salamHalf()
+    {
+        if (!done)
+            {
+                self.done = true
+                self.showView()
+                //print ("half salam")
+                
+        }
+    }
+    
+    func nopeHalf()
+    {
+        if (!done)
+            {
+                self.done = true
+                //print ("half Nope")
+                
+        }
+    }
+    
+    func superSalam()
+    {
+        if (!done)
+            {
+                self.done = true
+                //print ("Super Salam")
+                
+        }
+    }
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+     
+        if let view = getViewWithId(id: 1010)
+        {
+            view.alpha = 0
+            view.backgroundColor = UIColor.clear
+        }
+     
         let xDrift = self.center.x - originalCenter.x
         let yDrift = self.center.y - originalCenter.y
         self.setCellMovementDirectionFromDrift(xDrift, yDrift: yDrift)
@@ -112,6 +320,12 @@ public class SPTinderViewCell: UIView, UIGestureRecognizerDelegate {
         else if(-yDrift > self.frame.height * scaleToRemoveCell) { movement = .top }
         else if(yDrift > self.frame.height * scaleToRemoveCell) { movement = .bottom }
         else { movement = .none }
+             
+        if (self.disableMovement)
+        {
+            movement = .none
+        }
+        
         if movement != .none  {
             self.cellMovement = movement
             if let cellMoveBlock = onCellDidMove {
