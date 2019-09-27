@@ -62,7 +62,7 @@ public class SPTinderView: UIView {
         numberOfCells = _dataSource.numberOfItemsInTinderView(self)
         for index in currentIndex ..< min(visibleCount, numberOfCells - currentIndex) {
             print ("Populating Cell at Index: \(index)")
-            insertCell(at: index)
+            insertCell(at: index, top: false)
         }
         adjustVisibleCellPosition()
     }
