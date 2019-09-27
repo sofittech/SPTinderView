@@ -35,7 +35,7 @@ public class SPTinderView: UIView {
     
     public var delegate: SPTinderViewDelegate?
     public var currentIndex: Int = 0
-    fileprivate let visibleCount = 3
+    fileprivate let visibleCount = 100
     fileprivate var numberOfCells = 0
     
     // MARK: Initialization
@@ -61,6 +61,7 @@ public class SPTinderView: UIView {
         guard let _dataSource = dataSource else { return }
         numberOfCells = _dataSource.numberOfItemsInTinderView(self)
         for index in currentIndex ..< min(visibleCount, numberOfCells - currentIndex) {
+            print ("Populating Cell at Index: \(index)")
             insertCell(at: index)
         }
         adjustVisibleCellPosition()
@@ -84,7 +85,7 @@ public class SPTinderView: UIView {
         return cells
     }
     
-    fileprivate func insertCell(at index: Int) {
+    fileprivate func insertCell(at index: Int, top:Bool) {
         guard let _dataSource = dataSource , index < numberOfCells else { return }
         if let cell = _dataSource.tinderView(self, cellAt: index) {
             cell.onCellDidMove = { [weak self] direction in
@@ -99,7 +100,16 @@ public class SPTinderView: UIView {
                 }
             }
             self.insertSubview(cell, at: 0)
-            self.sendSubview(toBack: cell)
+            if (top)
+            {
+                self.bringSubview(toFront: cell)
+            }
+            else
+            {
+                self.sendSubview(toBack: cell)
+                
+            }
+            
             cell.center = self.center
         }
     }
@@ -126,7 +136,7 @@ public class SPTinderView: UIView {
             }, completion: { finished in
                 cell.removeFromSuperview()
                 self.recycleACell(cell)
-                self.insertCell(at: self.currentIndex + self.visibleCount)
+                self.insertCell(at: self.currentIndex + self.visibleCount, top: false)
                 self.currentIndex += 1
                 self.adjustVisibleCellPosition()
                 completion()
@@ -184,6 +194,20 @@ public class SPTinderView: UIView {
     public func reloadData() {
         cleanTinderView()
         setUpFirstSetOfCells()
+    }
+    
+    public func moveCell(direction: SPTinderViewCellMovement)
+    {
+
+        var cell = self.visibleCells().last
+        if (cell != nil)
+        {
+            self.delegate?.tinderView(self, didMoveCellAt: self.currentIndex, towards: direction)  
+            animateRemovalForCell(cell!, towards: direction) {
+                print ("Removed Cell")
+            }
+        }
+        
     }
     
     // MARK: Cache Management
