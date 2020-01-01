@@ -245,12 +245,12 @@
 				TargetAttributes = {
 					ED1F2A111C61D44B0084DD77 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3PU2FX2MA5;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
+						ProvisioningStyle = Manual;
 					};
 					ED1F2A251C61D44B0084DD77 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 						TestTargetID = ED1F2A111C61D44B0084DD77;
 					};
 					ED1F2A301C61D44B0084DD77 = {
@@ -472,12 +472,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 3PU2FX2MA5;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SPTinderView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.suraj.SPTinderView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -486,12 +489,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 3PU2FX2MA5;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SPTinderView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.suraj.SPTinderView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -503,7 +509,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sg.com.propertyguru.SPTinderViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SPTinderView.app/SPTinderView";
 			};
 			name = Debug;
@@ -516,7 +523,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sg.com.propertyguru.SPTinderViewTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SPTinderView.app/SPTinderView";
 			};
 			name = Release;

@@ -56,7 +56,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    func onReload() {
+    @objc func onReload() {
         cellCount += 1
         tinderView.reloadData()
     }

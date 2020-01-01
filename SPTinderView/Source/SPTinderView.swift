@@ -102,11 +102,11 @@ public class SPTinderView: UIView {
             self.insertSubview(cell, at: 0)
             if (top)
             {
-                self.bringSubview(toFront: cell)
+                self.bringSubviewToFront(cell)
             }
             else
             {
-                self.sendSubview(toBack: cell)
+                self.sendSubviewToBack(cell)
                 
             }
             
